@@ -1,4 +1,4 @@
-package com.voicetasksnotesapp
+package app.rork.voice_tasks_notes_app
 
 import android.app.Application
 import android.content.res.Configuration

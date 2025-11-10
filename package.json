@@ -3,10 +3,10 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "bunx rork start -p doubicn5fxfxm4vvv98dg --tunnel",
-    "start-web": "bunx rork start -p doubicn5fxfxm4vvv98dg --web --tunnel",
-    "start-web-dev": "DEBUG=expo* bunx rork start -p doubicn5fxfxm4vvv98dg --web --tunnel",
-    "lint": "expo lint"
+    "start": "expo start --web --port 5000 --host lan",
+    "lint": "expo lint",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "dependencies": {
     "@ai-sdk/react": "^2.0.82",
@@ -18,6 +18,8 @@
     "@tanstack/eslint-plugin-query": "^5.91.2",
     "@tanstack/react-query": "^5.90.5",
     "@ungap/structured-clone": "^1.3.0",
+    "chrono-node": "^2.9.0",
+    "compromise": "^14.14.4",
     "date-fns": "^4.1.0",
     "expo": "^54.0.20",
     "expo-av": "~16.0.7",
@@ -40,6 +42,7 @@
     "expo-web-browser": "^15.0.8",
     "lucide-react-native": "^0.548.0",
     "nativewind": "^4.1.23",
+    "natural": "^8.1.0",
     "openai": "^6.7.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
@@ -55,6 +58,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@expo/ngrok": "^4.1.0",
+    "@expo/webpack-config": "^19.0.1",
     "@types/react": "~19.1.10",
     "eslint": "9.31.0",
     "eslint-config-expo": "9.2.0",
