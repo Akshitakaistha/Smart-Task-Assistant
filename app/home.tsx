@@ -5,6 +5,7 @@ import { useTasks } from '@/providers/TaskProvider';
 import { TaskCard } from '@/components/TaskCard';
 import { Plus, Filter, Info, ListTodo } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { colors, spacing, borderRadius, shadows } from '@/constants/theme';
 
 export default function HomeScreen() {
   const { tasks, completeTask, deleteTask, isLoading } = useTasks();
@@ -35,9 +36,9 @@ export default function HomeScreen() {
           headerShown: true,
           title: 'Smart Task Assistant',
           headerStyle: {
-            backgroundColor: '#3498DB',
+            backgroundColor: colors.primary,
           },
-          headerTintColor: '#FFFFFF',
+          headerTintColor: colors.text.inverse,
           headerTitleStyle: {
             fontWeight: '700' as const,
             fontSize: 20,
@@ -46,25 +47,23 @@ export default function HomeScreen() {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <TouchableOpacity
                 onPress={() => router.push('/filter')}
-                // style={styles.headerButton}
                 style={[styles.headerButton, { marginRight: 8 }]}
               >
-                <Filter size={24} color="#FFFFFF" />
+                <Filter size={24} color={colors.text.inverse} />
               </TouchableOpacity>
               <TouchableOpacity
-      onPress={() => router.push('/about')}
-      style={[styles.headerButton, { marginRight: 8 }]}
-    >
-      <Info size={24} color="#FFFFFF" /> 
-      {/* You can use another icon like Info, User, or InfoIcon */}
-    </TouchableOpacity>
+                onPress={() => router.push('/about')}
+                style={[styles.headerButton, { marginRight: 8 }]}
+              >
+                <Info size={24} color={colors.text.inverse} />
+              </TouchableOpacity>
             </View>
           ),
         }}
       />
 
       <LinearGradient
-        colors={['#3498DB', '#2980B9']}
+        colors={[colors.primary, colors.primaryDark]}
         style={styles.header}
       >
         <ListTodo size={32} color="#FFFFFF" />
@@ -119,74 +118,61 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F6FA',
+    backgroundColor: colors.background,
   },
   header: {
-    paddingVertical: 24,
-    paddingHorizontal: 20,
+    paddingVertical: spacing.lg,
+    paddingHorizontal: spacing.md,
     alignItems: 'center',
-    gap: 8,
+    gap: spacing.sm,
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: '700' as const,
-    color: '#FFFFFF',
-    marginTop: 8,
+    color: colors.text.inverse,
+    marginTop: spacing.sm,
   },
   headerSubtitle: {
     fontSize: 14,
-    color: '#FFFFFF',
+    color: colors.text.inverse,
     opacity: 0.9,
   },
   headerButton: {
-    marginRight: 16,
-    padding: 4,
+    marginRight: spacing.md,
+    padding: spacing.xs,
   },
   listContent: {
-    paddingVertical: 16,
+    paddingVertical: spacing.md,
   },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 40,
-    gap: 16,
+    gap: spacing.md,
   },
   emptyTitle: {
     fontSize: 24,
     fontWeight: '700' as const,
-    color: '#2C3E50',
-    marginTop: 16,
+    color: colors.text.primary,
+    marginTop: spacing.md,
   },
   emptyText: {
     fontSize: 16,
-    color: '#7F8C8D',
+    color: colors.text.secondary,
     textAlign: 'center',
     lineHeight: 24,
   },
   fab: {
     position: 'absolute',
-    right: 20,
-    bottom: 20,
+    right: spacing.md,
+    bottom: spacing.md,
     width: 60,
     height: 60,
-    borderRadius: 30,
-    backgroundColor: '#3498DB',
+    borderRadius: borderRadius.full,
+    backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 8,
-      },
-      web: {
-        boxShadow: '0 4px 12px rgba(52, 152, 219, 0.4)',
-      } as any,
-    }),
+    ...shadows.lg,
   },
 });

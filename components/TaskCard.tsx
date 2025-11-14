@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Task } from '@/types/task';
 import { CheckCircle2, Clock, Calendar, Edit2, Trash2 } from 'lucide-react-native';
 import { format } from 'date-fns';
+import { colors, spacing, borderRadius, shadows } from '@/constants/theme';
 
 interface TaskCardProps {
   task: Task;
@@ -12,37 +13,27 @@ interface TaskCardProps {
 }
 
 export function TaskCard({ task, onPress, onEdit, onComplete, onDelete }: TaskCardProps) {
-  const priorityColors = {
-    high: '#FF4757',
-    medium: '#FFA502',
-    low: '#2ED573',
-  };
-
-  const categoryColors = {
-    work: '#5F27CD',
-    personal: '#00D2D3',
-    urgent: '#EE5A6F',
-    other: '#95A5A6',
-  };
+  const priorityColors = colors.priority;
+  const categoryColors = colors.category;
 
   return (
-    <TouchableOpacity 
-      style={styles.card} 
+    <TouchableOpacity
+      style={styles.card}
       onPress={onPress}
       activeOpacity={0.7}
     >
       <View style={styles.cardHeader}>
         <View style={styles.headerLeft}>
           {task.priority && (
-            <View 
+            <View
               style={[
-                styles.priorityBadge, 
+                styles.priorityBadge,
                 { backgroundColor: priorityColors[task.priority] + '20' }
               ]}
             >
-              <Text 
+              <Text
                 style={[
-                  styles.priorityText, 
+                  styles.priorityText,
                   { color: priorityColors[task.priority] }
                 ]}
               >
@@ -51,15 +42,15 @@ export function TaskCard({ task, onPress, onEdit, onComplete, onDelete }: TaskCa
             </View>
           )}
           {task.category && (
-            <View 
+            <View
               style={[
-                styles.categoryBadge, 
+                styles.categoryBadge,
                 { backgroundColor: categoryColors[task.category] + '20' }
               ]}
             >
-              <Text 
+              <Text
                 style={[
-                  styles.categoryText, 
+                  styles.categoryText,
                   { color: categoryColors[task.category] }
                 ]}
               >
@@ -71,7 +62,7 @@ export function TaskCard({ task, onPress, onEdit, onComplete, onDelete }: TaskCa
       </View>
 
       <Text style={styles.taskName} numberOfLines={2}>{task.name}</Text>
-      
+
       {task.description && (
         <Text style={styles.taskDescription} numberOfLines={2}>
           {task.description}
@@ -81,16 +72,16 @@ export function TaskCard({ task, onPress, onEdit, onComplete, onDelete }: TaskCa
       <View style={styles.metaRow}>
         {task.dueDate && (
           <View style={styles.metaItem}>
-            <Calendar size={14} color="#7F8C8D" />
+            <Calendar size={14} color={colors.text.secondary} />
             <Text style={styles.metaText}>
               {format(new Date(task.dueDate), 'MMM d, yyyy')}
             </Text>
           </View>
         )}
-        
+
         {task.dueTime && (
           <View style={styles.metaItem}>
-            <Clock size={14} color="#7F8C8D" />
+            <Clock size={14} color={colors.text.secondary} />
             <Text style={styles.metaText}>{task.dueTime}</Text>
           </View>
         )}
@@ -103,28 +94,28 @@ export function TaskCard({ task, onPress, onEdit, onComplete, onDelete }: TaskCa
       </View>
 
       <View style={styles.actions}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.actionButton}
           onPress={onComplete}
           activeOpacity={0.7}
         >
-          <CheckCircle2 size={20} color="#2ED573" />
+          <CheckCircle2 size={20} color={colors.success} />
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.actionButton}
           onPress={onEdit}
           activeOpacity={0.7}
         >
-          <Edit2 size={18} color="#3498DB" />
+          <Edit2 size={18} color={colors.primary} />
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.actionButton}
           onPress={onDelete}
           activeOpacity={0.7}
         >
-          <Trash2 size={18} color="#E74C3C" />
+          <Trash2 size={18} color={colors.error} />
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
@@ -133,49 +124,38 @@ export function TaskCard({ task, onPress, onEdit, onComplete, onDelete }: TaskCa
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 16,
-    marginHorizontal: 20,
-    marginBottom: 12,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 3,
-      },
-      web: {
-        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-      } as any,
-    }),
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
+    marginHorizontal: spacing.md,
+    marginBottom: spacing.sm + spacing.xs,
+    borderWidth: 1,
+    borderColor: colors.border.light,
+    ...shadows.md,
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: spacing.sm + spacing.xs,
   },
   headerLeft: {
     flexDirection: 'row',
-    gap: 8,
+    gap: spacing.sm,
   },
   priorityBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: borderRadius.sm - 2,
   },
   priorityText: {
     fontSize: 10,
     fontWeight: '700' as const,
   },
   categoryBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: borderRadius.sm - 2,
   },
   categoryText: {
     fontSize: 10,
@@ -185,44 +165,44 @@ const styles = StyleSheet.create({
   taskName: {
     fontSize: 18,
     fontWeight: '600' as const,
-    color: '#2C3E50',
+    color: colors.text.primary,
     marginBottom: 6,
   },
   taskDescription: {
     fontSize: 14,
-    color: '#7F8C8D',
-    marginBottom: 12,
+    color: colors.text.secondary,
+    marginBottom: spacing.sm + spacing.xs,
     lineHeight: 20,
   },
   metaRow: {
     flexDirection: 'row',
-    gap: 12,
-    marginBottom: 12,
+    gap: spacing.sm + spacing.xs,
+    marginBottom: spacing.sm + spacing.xs,
   },
   metaItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: spacing.xs,
   },
   metaText: {
     fontSize: 12,
-    color: '#7F8C8D',
+    color: colors.text.secondary,
   },
   durationText: {
     fontSize: 12,
-    color: '#7F8C8D',
+    color: colors.text.secondary,
     fontWeight: '500' as const,
   },
   actions: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    gap: 12,
-    paddingTop: 12,
+    gap: spacing.sm + spacing.xs,
+    paddingTop: spacing.sm + spacing.xs,
     borderTopWidth: 1,
-    borderTopColor: '#ECF0F1',
+    borderTopColor: colors.border.light,
   },
   actionButton: {
-    padding: 8,
-    borderRadius: 8,
+    padding: spacing.sm,
+    borderRadius: borderRadius.sm,
   },
 });
